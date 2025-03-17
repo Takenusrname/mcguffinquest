@@ -3,6 +3,8 @@ use specs::prelude::*;
 
 use rltk::Rect;
 
+use crate::{WINDOW_HEIGHT, WINDOW_WIDTH};
+
 use super::colors::*;
 use super::{ CombatStats, Equipped, game_log::GameLog, Hidden, HungerClock, HungerState, InBackpack, Map, Name, Player, Position, rex_assets::RexAssets, RunState, State, Viewshed };
 
@@ -376,14 +378,8 @@ pub fn main_menu(gs: &mut State, ctx: &mut Rltk) -> MainMenuResult {
 
     let x: i32 = 5;
     let mut y = 23;
-    let by_y: i32 = 27;
     
-    ctx.print_color(52, by_y, title_fg, bg, "By u/usrTaken");
-    ctx.print_color(52-5, by_y + 1, notselet_fg, bg, "_______________________");
-    ctx.print_color_centered_at(60, by_y + 3, select_fg, bg,"Based upon the Rust Roguelike Tutorial" );
-    ctx.print_color_centered_at(59, by_y + 4, title_fg, bg, "By u/thebracket");
-
-    ctx.draw_box_double(x - 3, y - 2, 27, 11, title_fg, bg);
+    ctx.draw_hollow_box_double(x - 3, y - 2, 27, 11, title_fg, bg);
     ctx.print_color(x - 1, y, select_fg, bg, "Use ▲/▼ arrows and Enter");
     ctx.print_color(x - 1, y + 1, select_fg, bg, "to make selection." );
 

@@ -1,6 +1,8 @@
 /target
 /images
 /wasm
+/.vs
+/.vscode
 push_origins_*.cmd
 wasm_build.cmd
 savegame.json
