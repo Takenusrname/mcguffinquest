@@ -235,7 +235,7 @@ impl GameState for State {
                     gui::MainMenuResult::Selected { selected } => {
                         match selected {
                             gui::MainMenuSelection::NewGame => {
-                                self.game_over_cleanup();
+                                //self.game_over_cleanup();
                                 newrunstate = RunState::PreRun;
                             }
                             gui::MainMenuSelection::LoadGame => {
