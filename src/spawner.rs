@@ -9,8 +9,8 @@ use super::{ AreaOfEffect, BlocksTile, colors::*, CombatStats, Confusion, Consum
 
 /// Spawn the player and returns his/her entity object.
 pub fn player(ecs: &mut World, player_x: i32, player_y: i32) -> Entity {
-    let fg: RGB = return_rgb(PLAYER_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let fg: RGB = return_u8_rgb(PLAYER_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
     let glyph: u16 = rltk::to_cp437(PLAYER_GLYPH);
     ecs
         .create_entity()
@@ -123,7 +123,7 @@ fn spawn_entity(ecs: &mut World, spawn: &(&usize, &String)) {
 
 fn orc(ecs: &mut World, x: i32, y: i32) {
     let glyph: u16 = rltk::to_cp437(ORC_GLYPH);
-    let fg: RGB = return_rgb(ORC_FG);
+    let fg: RGB = return_u8_rgb(ORC_FG);
     let name: &str = "Orc";
 
     monster(ecs, x, y, glyph, fg, name);
@@ -131,7 +131,7 @@ fn orc(ecs: &mut World, x: i32, y: i32) {
 
 fn goblin(ecs: &mut World, x: i32, y: i32) {
     let glyph: u16 = rltk::to_cp437(GOBLIN_GLYPH);
-    let fg: RGB = return_rgb(GOBLIN_FG);
+    let fg: RGB = return_u8_rgb(GOBLIN_FG);
     let name: &str = "Goblin";
 
     monster(ecs, x, y, glyph, fg, name);
@@ -143,7 +143,7 @@ fn monster<S: ToString>(ecs: &mut World, x: i32, y: i32, glyph: rltk::FontCharTy
         .with(Renderable {
             glyph,
             fg,
-            bg: return_rgb(DEFAULT_BG),
+            bg: return_u8_rgb(DEFAULT_BG),
             render_order: 1
         })
         .with(Viewshed {
@@ -166,8 +166,8 @@ fn monster<S: ToString>(ecs: &mut World, x: i32, y: i32, glyph: rltk::FontCharTy
 
 fn health_potion(ecs: &mut World, x: i32, y: i32) {
     let glyph: u16 = rltk::to_cp437(POTION_GLYPH);
-    let fg: RGB = return_rgb(HEALTH_POT_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let fg: RGB = return_u8_rgb(HEALTH_POT_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
     let name: &str = "Health Potion";
     
     ecs.create_entity()
@@ -188,8 +188,8 @@ fn health_potion(ecs: &mut World, x: i32, y: i32) {
 
 fn magic_missile_scrolls(ecs: &mut World, x: i32, y: i32) {
     let glyph: u16 = rltk::to_cp437(SCROLL_GLYPH);
-    let fg: RGB = return_rgb(MMS_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let fg: RGB = return_u8_rgb(MMS_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
     
     ecs.create_entity()
         .with(Position{ x, y})
@@ -211,8 +211,8 @@ fn magic_missile_scrolls(ecs: &mut World, x: i32, y: i32) {
 fn fireball_scroll(ecs: &mut World, x: i32, y: i32) {
 
     let glyph: u16 = rltk::to_cp437(SCROLL_GLYPH);
-    let fg: RGB = return_rgb(FIREBALL_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let fg: RGB = return_u8_rgb(FIREBALL_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
 
     ecs.create_entity()
         .with(Position{ x, y })
@@ -235,8 +235,8 @@ fn fireball_scroll(ecs: &mut World, x: i32, y: i32) {
 fn confusion_scroll(ecs: &mut World, x: i32, y: i32) {
 
     let glyph: u16 = rltk::to_cp437(SCROLL_GLYPH);
-    let fg: RGB = return_rgb(CONFUSION_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let fg: RGB = return_u8_rgb(CONFUSION_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
 
     ecs.create_entity()
         .with(Position{ x, y })
@@ -257,8 +257,8 @@ fn confusion_scroll(ecs: &mut World, x: i32, y: i32) {
 
 fn dagger(ecs: &mut World, x: i32, y: i32) {
     let glyph: u16 = rltk::to_cp437(DAGGER_GLYPH);
-    let fg: RGB = return_rgb(DAGGER_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let fg: RGB = return_u8_rgb(DAGGER_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
     let name: &str = "Dagger";
     ecs.create_entity()
         .with(Position{ x, y })
@@ -278,8 +278,8 @@ fn dagger(ecs: &mut World, x: i32, y: i32) {
 
 fn shield(ecs: &mut World, x: i32, y: i32) {
     let glyph: u16 = rltk::to_cp437(SHIELD_GLYPH);
-    let fg: RGB = return_rgb(SHIELD_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let fg: RGB = return_u8_rgb(SHIELD_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
     let name: &str = "Shield";
     
     ecs.create_entity()
@@ -301,8 +301,8 @@ fn shield(ecs: &mut World, x: i32, y: i32) {
 fn longsword(ecs: &mut World, x: i32, y: i32) {
     
     let glyph: u16 = rltk::to_cp437(SWORD_GLYPH);
-    let fg: RGB = return_rgb(SWORD_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let fg: RGB = return_u8_rgb(SWORD_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
     let name: &str = "Longsword";
 
     ecs.create_entity()
@@ -324,8 +324,8 @@ fn longsword(ecs: &mut World, x: i32, y: i32) {
 fn tower_shield(ecs: &mut World, x: i32, y: i32) {
 
     let glyph: u16 = rltk::to_cp437(TOWER_S_GLYPH);
-    let fg: RGB = return_rgb(TOWER_S_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let fg: RGB = return_u8_rgb(TOWER_S_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
     let name: &str = "Tower Shield";
 
     ecs.create_entity()
@@ -347,8 +347,8 @@ fn tower_shield(ecs: &mut World, x: i32, y: i32) {
 fn rations(ecs: &mut World, x: i32, y: i32) {
 
     let glyph: u16 = rltk::to_cp437(RATIONS_GLYPH);
-    let fg: RGB = return_rgb(RATION_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let fg: RGB = return_u8_rgb(RATION_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
     let name: &str = "Rations";
 
     ecs.create_entity()
@@ -370,8 +370,8 @@ fn rations(ecs: &mut World, x: i32, y: i32) {
 fn magic_mapping_scroll(ecs: &mut World, x: i32, y: i32) {
     
     let glyph: u16 = rltk::to_cp437(SCROLL_GLYPH);
-    let fg: RGB = return_rgb(MAGICMAP_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let fg: RGB = return_u8_rgb(MAGICMAP_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
     let name: &str = "Scroll of Magic Mapping";
 
     ecs.create_entity()
@@ -393,8 +393,8 @@ fn magic_mapping_scroll(ecs: &mut World, x: i32, y: i32) {
 fn bear_trap(ecs: &mut World, x: i32, y: i32) {
 
     let glyph: u16 = rltk::to_cp437(BEARTRAP_GLYPH);
-    let fg: RGB = return_rgb(BEARTRAP_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let fg: RGB = return_u8_rgb(BEARTRAP_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
     let name: &str = "Bear Trap";
 
     ecs.create_entity()

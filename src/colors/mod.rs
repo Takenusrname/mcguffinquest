@@ -1,10 +1,16 @@
 mod db16;
 use db16::*;
 mod db32;
+mod lcd;
 use rltk::RGB;
 
-pub fn return_rgb(color_values: (f32,f32,f32)) -> RGB {
-    let rgb = RGB::from_f32(color_values.0, color_values.1, color_values.2);
+pub fn return_u8_rgb(color_values: (f32,f32,f32)) -> RGB {
+    let rgb: RGB = RGB::from_f32(color_values.0, color_values.1, color_values.2);
+    return rgb
+}
+
+pub fn return_f32_rgb(color_values: (u8, u8, u8)) -> RGB {
+    let rgb: RGB = RGB::from_u8(color_values.0, color_values.1, color_values.2);
     return rgb
 }
 

@@ -1,6 +1,6 @@
 use rltk::{Point, RGB};
 use specs::prelude::*;
-use super::{colors::{return_rgb, CONFUSION_FG, DEFAULT_BG}, Confusion, glyph_index::CONFUSION_GLYPH, Map, Monster, particle_system::ParticleBuilder, Position, RunState, Viewshed, WantsToMelee};
+use super::{colors::{return_u8_rgb, CONFUSION_FG, DEFAULT_BG}, Confusion, glyph_index::CONFUSION_GLYPH, Map, Monster, particle_system::ParticleBuilder, Position, RunState, Viewshed, WantsToMelee};
 
 pub struct MonsterAI {}
 
@@ -38,8 +38,8 @@ impl<'a> System<'a> for MonsterAI {
                 }
                 can_act = false;
 
-                let fg: RGB = return_rgb(CONFUSION_FG);
-                let bg: RGB = return_rgb(DEFAULT_BG);
+                let fg: RGB = return_u8_rgb(CONFUSION_FG);
+                let bg: RGB = return_u8_rgb(DEFAULT_BG);
                 let glyph = rltk::to_cp437(CONFUSION_GLYPH);
                 particle_builder.request(pos.x, pos.y, fg, bg, glyph, 200.0)
 

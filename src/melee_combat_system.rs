@@ -1,6 +1,6 @@
 use specs::prelude::*;
 
-use crate::colors::return_rgb;
+use crate::colors::return_u8_rgb;
 
 use super::{CombatStats, DefenseBonus, Equipped, game_log::GameLog, glyph_index::POW_GLYPH, HungerClock, HungerState, WantsToMelee, MeleePowerBonus, Name,
              particle_system::ParticleBuilder, Position, SufferDamage};
@@ -57,7 +57,7 @@ impl<'a> System<'a> for MeleeCombatSystem {
 
                     let pos = positions.get(wants_melee.target);
                     if let Some(pos) = pos {
-                        particle_builder.request(pos.x, pos.y, return_rgb(POW_FG), return_rgb(DEFAULT_BG), rltk::to_cp437(POW_GLYPH), 200.0);
+                        particle_builder.request(pos.x, pos.y, return_u8_rgb(POW_FG), return_u8_rgb(DEFAULT_BG), rltk::to_cp437(POW_GLYPH), 200.0);
                     }
 
                     let damage = i32::max(0, (stats.power + offensive_bonus) - (target_stats.defense + defensive_bonus));

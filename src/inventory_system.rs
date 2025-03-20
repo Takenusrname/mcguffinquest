@@ -2,7 +2,7 @@ use rltk::RGB;
 use specs::prelude::*;
 
 use super::{glyph_index::{AOE_GLYPH, CONFUSION_GLYPH, HEAL_GLYPH, POW_GLYPH},
-            colors::{return_rgb, AOE_FG, DMG_FG, DEFAULT_BG, HEAL_FG, CONFUSION_FG}};
+            colors::{return_u8_rgb, AOE_FG, DMG_FG, DEFAULT_BG, HEAL_FG, CONFUSION_FG}};
 
 
 use super::{AreaOfEffect, CombatStats, Confusion, Consumable, Equippable, Equipped, game_log::GameLog, HungerClock, HungerState, InBackpack, InflictsDamage, MagicMapper, Map,
@@ -95,8 +95,8 @@ impl<'a> System<'a> for ItemUseSystem {
                                 for mob in map.tile_content[idx].iter() {
                                     targets.push(*mob);
                                 }
-                                let fg: RGB = return_rgb(AOE_FG);
-                                let bg: RGB = return_rgb(DEFAULT_BG);
+                                let fg: RGB = return_u8_rgb(AOE_FG);
+                                let bg: RGB = return_u8_rgb(DEFAULT_BG);
                                 let glyph = rltk::to_cp437(AOE_GLYPH);
                                 particle_builder.request(tile_idx.x, tile_idx.y, fg, bg, glyph, 200.0);
                             }
@@ -181,8 +181,8 @@ impl<'a> System<'a> for ItemUseSystem {
 
                             let pos = positions.get(*target);
                             if let Some(pos) = pos {
-                                let fg: RGB = return_rgb(HEAL_FG);
-                                let bg: RGB = return_rgb(DEFAULT_BG);
+                                let fg: RGB = return_u8_rgb(HEAL_FG);
+                                let bg: RGB = return_u8_rgb(DEFAULT_BG);
                                 let glyph = rltk::to_cp437(HEAL_GLYPH);
                                 particle_builder.request(pos.x, pos.y, fg, bg, glyph, 200.0);
                             }
@@ -206,8 +206,8 @@ impl<'a> System<'a> for ItemUseSystem {
 
                             let pos = positions.get(*mob);
                             if let Some(pos) = pos {
-                                let fg: RGB = return_rgb(DMG_FG);
-                                let bg: RGB = return_rgb(DEFAULT_BG);
+                                let fg: RGB = return_u8_rgb(DMG_FG);
+                                let bg: RGB = return_u8_rgb(DEFAULT_BG);
                                 let glyph = rltk::to_cp437(POW_GLYPH);
                                 particle_builder.request(pos.x, pos.y, fg, bg, glyph, 200.0);
                             }
@@ -234,8 +234,8 @@ impl<'a> System<'a> for ItemUseSystem {
                                 
                                 let pos = positions.get(*mob);
                                 if let Some(pos) = pos {
-                                    let fg: RGB = return_rgb(CONFUSION_FG);
-                                    let bg: RGB = return_rgb(DEFAULT_BG);
+                                    let fg: RGB = return_u8_rgb(CONFUSION_FG);
+                                    let bg: RGB = return_u8_rgb(DEFAULT_BG);
                                     let glyph = rltk::to_cp437(CONFUSION_GLYPH);
                                     particle_builder.request(pos.x, pos.y, fg, bg, glyph, 200.0)
                                 }

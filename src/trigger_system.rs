@@ -44,7 +44,7 @@ impl<'a> System<'a> for TriggerSystem {
                             // I the trap is damage inflicting, do it
                             let damage = inflicts_damage.get(*entity_id);
                             if let Some(damage) = damage {
-                                particle_builder.request(pos.x, pos.y, return_rgb(DMG_FG), return_rgb(DEFAULT_BG), rltk::to_cp437(POW_GLYPH), 200.0);
+                                particle_builder.request(pos.x, pos.y, return_u8_rgb(DMG_FG), return_u8_rgb(DEFAULT_BG), rltk::to_cp437(POW_GLYPH), 200.0);
                                 SufferDamage::new_damage(&mut inflict_damage, entity, damage.damage);
                             }
 

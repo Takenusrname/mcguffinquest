@@ -184,32 +184,32 @@ pub fn draw_map(map: &Map, ctx: &mut Rltk) {
         if map.revealed_tiles[idx] {
             let glyph;
             let mut fg: RGB;
-            let mut bg: RGB = return_rgb(DEFAULT_BG);
+            let mut bg: RGB = return_u8_rgb(DEFAULT_BG);
             // Render a tile depending upon the tile type
             match tile {
                 TileType::Floor => {
                     glyph = rltk::to_cp437(FLOOR_GLYPH);
-                    fg = return_rgb(FLOOR_COLOR);
+                    fg = return_u8_rgb(FLOOR_COLOR);
                 }
                 TileType::Wall => {
                     glyph = wall_glyph(&*map, x, y);
-                    fg = return_rgb(WALL_COLOR);
+                    fg = return_u8_rgb(WALL_COLOR);
                 }
                 TileType::DownStairs => {
                     glyph = rltk::to_cp437(STAIRS_GLYPH);
-                    fg = return_rgb(STAIRS_FG);
+                    fg = return_u8_rgb(STAIRS_FG);
                 }
             }
-            if map.bloodstains.contains(&idx) { bg = return_rgb(BLOOD_BG);}
+            if map.bloodstains.contains(&idx) { bg = return_u8_rgb(BLOOD_BG);}
             if !map.visible_tiles[idx] { 
-                fg = return_rgb(OUT_OF_VIEW);
-                bg = return_rgb(DEFAULT_BG);
+                fg = return_u8_rgb(OUT_OF_VIEW);
+                bg = return_u8_rgb(DEFAULT_BG);
             } 
             ctx.set(x, y, fg, bg, glyph);
         } else {
             let glyph;
-            let fg = return_rgb(AETHER_FG);
-            let bg = return_rgb(DEFAULT_BG);
+            let fg = return_u8_rgb(AETHER_FG);
+            let bg = return_u8_rgb(DEFAULT_BG);
             glyph = rltk::to_cp437(AETHER_GLYPH);
             ctx.set(x, y, fg, bg, glyph);
         }

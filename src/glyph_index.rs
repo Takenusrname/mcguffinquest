@@ -20,7 +20,7 @@ pub const TOWER_S_GLYPH: char = '(';
 pub const WALL_GLYPH: char = '#';
 pub const FLOOR_GLYPH: char = '.';
 pub const STAIRS_GLYPH: char = '»';
-pub const AETHER_GLYPH: char = ' ';
+pub const AETHER_GLYPH: char = '≈';
 pub const BEARTRAP_GLYPH: char = '^';
 
 // Particles

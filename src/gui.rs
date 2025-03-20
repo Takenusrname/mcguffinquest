@@ -9,10 +9,10 @@ use super::colors::*;
 use super::{ CombatStats, Equipped, game_log::GameLog, Hidden, HungerClock, HungerState, InBackpack, Map, Name, Player, Position, rex_assets::RexAssets, RunState, State, Viewshed };
 
 pub fn draw_ui(ecs: &World, ctx: &mut Rltk) {
-    let fg: RGB = return_rgb(DEFAULT_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let fg: RGB = return_u8_rgb(DEFAULT_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
 
-    let m_bg: RGB = return_rgb(MOUSE_BG);
+    let m_bg: RGB = return_u8_rgb(MOUSE_BG);
 
     let info_title = format!(" Player Info. ");
     let msg_title = format!(" Message Log ");
@@ -44,22 +44,22 @@ pub fn draw_ui(ecs: &World, ctx: &mut Rltk) {
         
         ctx.print_color(2, 42, fg, bg, &health);
 
-        let bar_fg: RGB = return_rgb(HEALTH_BAR_FG);
-        let bar_bg: RGB = return_rgb(DEFAULT_BG);
+        let bar_fg: RGB = return_u8_rgb(HEALTH_BAR_FG);
+        let bar_bg: RGB = return_u8_rgb(DEFAULT_BG);
 
         ctx.draw_bar_horizontal(2, 43, 15, stats.hp, stats.max_hp, bar_fg, bar_bg);
 
         match hc.state {
-            HungerState::WellFed => ctx.print_color(2, 44, return_rgb(WELLFED), return_rgb(DEFAULT_BG), "Well Fed"),
-            HungerState::Normal => ctx.print_color(2, 44, return_rgb(FED), return_rgb(DEFAULT_BG), "Fed"),
-            HungerState::Hungry => ctx.print_color(2, 44, return_rgb(HUNGRY), return_rgb(DEFAULT_BG), "Hungry"),
-            HungerState::Starving => ctx.print_color(2, 44, return_rgb(STARVING), return_rgb(DEFAULT_BG), "Starving"),
+            HungerState::WellFed => ctx.print_color(2, 44, return_u8_rgb(WELLFED), return_u8_rgb(DEFAULT_BG), "Well Fed"),
+            HungerState::Normal => ctx.print_color(2, 44, return_u8_rgb(FED), return_u8_rgb(DEFAULT_BG), "Fed"),
+            HungerState::Hungry => ctx.print_color(2, 44, return_u8_rgb(HUNGRY), return_u8_rgb(DEFAULT_BG), "Hungry"),
+            HungerState::Starving => ctx.print_color(2, 44, return_u8_rgb(STARVING), return_u8_rgb(DEFAULT_BG), "Starving"),
         }
     }
 
     let map = ecs.fetch::<Map>();
     let depth = format!(" Depth: {} ", map.depth);
-    ctx.print_color(1, 49, return_rgb(DEFAULT_BG), return_rgb(DEFAULT_FG), &depth);
+    ctx.print_color(1, 49, return_u8_rgb(DEFAULT_BG), return_u8_rgb(DEFAULT_FG), &depth);
 
     let log = ecs.fetch::<GameLog>();
 
@@ -91,8 +91,8 @@ fn draw_tooltips(ecs: &World, ctx: &mut Rltk) {
         }
     }
 
-    let fg: RGB = return_rgb(DEFAULT_FG);
-    let bg: RGB = return_rgb(TOOLTIP_BG);
+    let fg: RGB = return_u8_rgb(DEFAULT_FG);
+    let bg: RGB = return_u8_rgb(TOOLTIP_BG);
 
     if !tooltip.is_empty() {
         let mut width: i32 = 0;
@@ -185,17 +185,17 @@ pub fn show_drop_use_inventory(gs: &mut State, ctx: &mut Rltk, action: &str) -> 
 
     let fg: RGB;
     let bg: RGB;
-    let ctrl_fg: RGB = return_rgb(CTRL_FG);
+    let ctrl_fg: RGB = return_u8_rgb(CTRL_FG);
 
     if action == "drop" {
-        fg = return_rgb(MENU_FG);
-        bg = return_rgb(DROP_BG);
+        fg = return_u8_rgb(MENU_FG);
+        bg = return_u8_rgb(DROP_BG);
     } else if action == "use" {
-        fg = return_rgb(MENU_FG);
-        bg = return_rgb(INV_BG);
+        fg = return_u8_rgb(MENU_FG);
+        bg = return_u8_rgb(INV_BG);
     } else {
-        fg = return_rgb(DEFAULT_FG);
-        bg = return_rgb(DEFAULT_BG);
+        fg = return_u8_rgb(DEFAULT_FG);
+        bg = return_u8_rgb(DEFAULT_BG);
     }
 
     inventory_frame(ctx, count, x, y, w, fg, bg, ctrl_fg, action);
@@ -239,9 +239,9 @@ pub fn remove_item_menu(gs: &mut State, ctx: &mut Rltk) -> (ItemMenuResult, Opti
     let inventory = (&backpack, &names).join().filter(|item| item.0.owner == *player_entity );
     let count = inventory.count();
 
-    let fg: RGB = return_rgb(MENU_FG);
-    let bg: RGB = return_rgb(REMOVE_BG);
-    let ctrl_fg: RGB = return_rgb(CTRL_FG);
+    let fg: RGB = return_u8_rgb(MENU_FG);
+    let bg: RGB = return_u8_rgb(REMOVE_BG);
+    let ctrl_fg: RGB = return_u8_rgb(CTRL_FG);
     
     let x: i32 = 15;
     let mut y = (25 - (count / 2)) as i32;
@@ -285,10 +285,10 @@ pub enum GameOverResult {
 
 pub fn game_over(ctx: &mut Rltk) -> GameOverResult {
     let y: i32 = 15;
-    let game_over_fg: RGB = return_rgb(GAME_OVER_FG);
-    let fg: RGB = return_rgb(DEFAULT_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
-    let ctrl_fg: RGB = return_rgb(CTRL_FG);
+    let game_over_fg: RGB = return_u8_rgb(GAME_OVER_FG);
+    let fg: RGB = return_u8_rgb(DEFAULT_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
+    let ctrl_fg: RGB = return_u8_rgb(CTRL_FG);
 
     ctx.print_color_centered(y, game_over_fg, bg, "Your journey has ended!");
     ctx.print_color_centered(y + 2, fg, bg, "You have failed your Quest to Collect the McGuffin");
@@ -308,13 +308,13 @@ pub fn ranged_target(gs: &mut State, ctx: &mut Rltk, range: i32) -> (ItemMenuRes
     let viewsheds = gs.ecs.read_storage::<Viewshed>();
 
     // Targeting message
-    let fg: RGB = return_rgb(CTRL_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let fg: RGB = return_u8_rgb(CTRL_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
     let msg = "Select Target";
     ctx.print_color(5, 0, fg, bg, msg);
 
     // Highlight available target cells
-    let target_bg: RGB = return_rgb(TARGET_BG);
+    let target_bg: RGB = return_u8_rgb(TARGET_BG);
     let mut available_cells = Vec::new();
     let visible = viewsheds.get(*player_entity);
     if let Some(visible) = visible {
@@ -331,8 +331,8 @@ pub fn ranged_target(gs: &mut State, ctx: &mut Rltk, range: i32) -> (ItemMenuRes
     }
 
     // Draw mouse cursor
-    let valid_bg: RGB = return_rgb(MOUSE_BG);
-    let invalid_bg: RGB = return_rgb(ERROR_BG);
+    let valid_bg: RGB = return_u8_rgb(MOUSE_BG);
+    let invalid_bg: RGB = return_u8_rgb(ERROR_BG);
     let mouse_pos = ctx.mouse_pos();
     let mut valid_target = false;
     for idx in available_cells.iter() { if idx.x == mouse_pos.0 && idx.y == mouse_pos.1 { valid_target = true; } }
@@ -361,15 +361,15 @@ pub fn main_menu(gs: &mut State, ctx: &mut Rltk) -> MainMenuResult {
     let save_exists = super::saveload_system::does_save_exist();
     let runstate = gs.ecs.fetch::<RunState>();
 
-    let title_fg: RGB = return_rgb(TITLE_FG);
-    let bg: RGB = return_rgb(DEFAULT_BG);
+    let title_fg: RGB = return_u8_rgb(TITLE_FG);
+    let bg: RGB = return_u8_rgb(DEFAULT_BG);
 
-    let select_fg: RGB = return_rgb(SELECT_FG);
-    let notselet_fg: RGB = return_rgb(NOTSELECT_FG);
+    let select_fg: RGB = return_u8_rgb(SELECT_FG);
+    let notselet_fg: RGB = return_u8_rgb(NOTSELECT_FG);
 
-    let select_cn_fg: RGB = return_rgb(CN_FG);
-    let select_cl_fg: RGB = return_rgb(CL_FG);
-    let select_cq_fg: RGB = return_rgb(CQ_FG);
+    let select_cn_fg: RGB = return_u8_rgb(CN_FG);
+    let select_cl_fg: RGB = return_u8_rgb(CL_FG);
+    let select_cq_fg: RGB = return_u8_rgb(CQ_FG);
 
     let sel_glyph = rltk::to_cp437('►');
 
