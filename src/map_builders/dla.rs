@@ -211,7 +211,7 @@ impl DLABuilder {
                         path.remove(0);
                         digger_idx = self.map.xy_idx(digger_x, digger_y);
                     }
-                    paint(&mut self.map, self.symmetry, self.brush_size, digger_x, digger_y);
+                    paint(&mut self.map, self.symmetry, self.brush_size, prev_x, prev_y);
                 }
             }
             self.take_snapshot();
