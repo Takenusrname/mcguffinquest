@@ -97,7 +97,7 @@ pub fn paint(map: &mut Map, mode: Symmetry, brush_size: i32, x: i32, y: i32) {
             if x == center_x {
                 apply_paint(map, brush_size, x, y);
             } else {
-                let dist_x = i32::abs(center_x + x);
+                let dist_x = i32::abs(center_x - x);
                 apply_paint(map, brush_size, center_x + dist_x, y);
                 apply_paint(map, brush_size, center_x - dist_x, y);
             }

@@ -19,6 +19,9 @@ use dla::DLABuilder;
 mod voronoi;
 use voronoi::VoronoiCellBuilder;
 
+mod waveform_collapse;
+use waveform_collapse::WaveformCollapseBuilder;
+
 use specs::prelude::*;
 
 pub trait MapBuilder {
@@ -33,8 +36,8 @@ pub trait MapBuilder {
 pub fn random_builder(new_depth: i32) -> Box<dyn MapBuilder> {
     
     // For testing Purposes 
-    //Box::new(VoronoiCellBuilder::manhattan(new_depth))
-    //*
+    Box::new(WaveformCollapseBuilder::new(new_depth))
+    /*
     let mut rng = rltk::RandomNumberGenerator::new();
     let builder = rng.roll_dice(1, 16);
     match builder {
