@@ -10,7 +10,7 @@ pub const MAPWIDTH: usize = 80;
 pub const MAPHEIGHT: usize = 40;
 pub const MAPCOUNT: usize = MAPHEIGHT * MAPWIDTH;
 
-#[derive(PartialEq, Copy, Clone, Serialize, Deserialize)]
+#[derive(PartialEq, Eq, Hash, Copy, Clone, Serialize, Deserialize)]
 pub enum TileType {
     Wall, Floor, DownStairs
 }
@@ -79,7 +79,7 @@ fn is_revealed_and_wall(map: &Map, x: i32, y: i32) -> bool {
 }
 
 fn wall_glyph(map: &Map, x: i32, y: i32) -> rltk::FontCharType {
-    // if x < 1 || x > map.width - 2 || y < 1 || y > map.height - 2 as i32 { return 35; }
+    //if x < 1 || x > map.width - 2 || y < 1 || y > map.height - 2 as i32 { return 35; }
 
     /*
     4-bit mask values

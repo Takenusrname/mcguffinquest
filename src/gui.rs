@@ -1,7 +1,5 @@
-use rltk::{ Point, RGB, Rltk, VirtualKeyCode};
+use rltk::{ Point, RGB, Rltk, VirtualKeyCode, Rect};
 use specs::prelude::*;
-
-use rltk::Rect;
 
 use crate::{WINDOW_HEIGHT, WINDOW_WIDTH};
 
@@ -289,7 +287,8 @@ pub fn game_over(ctx: &mut Rltk) -> GameOverResult {
     let fg: RGB = return_u8_rgb(DEFAULT_FG);
     let bg: RGB = return_u8_rgb(DEFAULT_BG);
     let ctrl_fg: RGB = return_u8_rgb(CTRL_FG);
-
+    let target = Rect::with_size(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    ctx.fill_region(target, 32, fg, bg);
     ctx.print_color_centered(y, game_over_fg, bg, "Your journey has ended!");
     ctx.print_color_centered(y + 2, fg, bg, "You have failed your Quest to Collect the McGuffin");
 

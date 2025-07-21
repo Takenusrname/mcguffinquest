@@ -4,7 +4,7 @@ use super::{Map, TileType};
 
 pub fn load_rex_map(new_depth: i32, xp_file: &XpFile) -> Map {
     let mut map: Map = Map::new(new_depth);
-    
+
     for layer in &xp_file.layers {
         for y in 0..layer.height {
             for x in 0..layer.width {
@@ -20,5 +20,6 @@ pub fn load_rex_map(new_depth: i32, xp_file: &XpFile) -> Map {
             }
         }
     }
+
     map
 }

@@ -1,13 +1,13 @@
-#![windows_subsystem = "windows"]
+//#![windows_subsystem = "windows"]
 
 extern crate serde;
 
-use rltk::{GameState, Point, Rltk, RGB};
+use rltk::{GameState, Point, Rltk}; //, RGB};
 use specs::prelude::*;
 use specs::saveload::{ SimpleMarker, SimpleMarkerAllocator};
 
 mod colors;
-use colors::*;
+//use colors::*;
 mod damage_system;
 use damage_system::DamageSystem;
 mod components;
@@ -117,24 +117,20 @@ impl GameState for State {
             RunState::GameOver {..} => {}
             _ => {
                 draw_map(&self.ecs.fetch::<Map>(), ctx);
+                let positions = self.ecs.read_storage::<Position>();
+                let renderables = self.ecs.read_storage::<Renderable>();
+                let hidden = self.ecs.read_storage::<Hidden>();
+                let map = self.ecs.fetch::<Map>();
 
-                {
-                    let positions = self.ecs.read_storage::<Position>();
-                    let renderables = self.ecs.read_storage::<Renderable>();
-                    let hidden = self.ecs.read_storage::<Hidden>();
-                    let map = self.ecs.fetch::<Map>();
+                let mut data = (&positions, &renderables, !&hidden).join().collect::<Vec<_>>();
+                data.sort_by(|&a, &b| b.1.render_order.cmp(&a.1.render_order) );
 
-                    let mut data = (&positions, &renderables, !&hidden).join().collect::<Vec<_>>();
-                    data.sort_by(|&a, &b| b.1.render_order.cmp(&a.1.render_order) );
-
-                    for (pos, render, _hidden) in data.iter() {
-                        let idx = map.xy_idx(pos.x, pos.y);
-                        if map.visible_tiles[idx] { 
-                            ctx.set(pos.x, pos.y, render.fg, render.bg, render.glyph); }
-                    }
-        
-                    gui::draw_ui(&self.ecs, ctx);
+                for (pos, render, _hidden) in data.iter() {
+                    let idx = map.xy_idx(pos.x, pos.y);
+                    if map.visible_tiles[idx] { 
+                        ctx.set(pos.x, pos.y, render.fg, render.bg, render.glyph); }
                 }
+                gui::draw_ui(&self.ecs, ctx);
             }
         }
  
@@ -149,7 +145,7 @@ impl GameState for State {
                 draw_map(&self.mapgen_history[self.mapgen_index], ctx);
 
                 self.mapgen_timer += ctx.frame_time_ms;
-                if self.mapgen_timer > 300.0 {
+                if self.mapgen_timer > 200.0 {
                     self.mapgen_timer = 0.0;
                     self.mapgen_index += 1;
                     if self.mapgen_index >= self.mapgen_history.len() {
@@ -449,8 +445,9 @@ impl State {
 }
 
 // Embedding font files in exe
-rltk::embedded_resource!(GAME_FONT, "../resources/cp437_16x16_mod.png");
-rltk::embedded_resource!(GAME_FONT2,"../resources/cp437_16x16.png");
+rltk::embedded_resource!(GAME_FONT, "../resources/cp437_8x8.png");
+rltk::embedded_resource!(GAME_FONT2, "../resources/cp437_16x16_mod.png");
+rltk::embedded_resource!(GAME_FONT3,"../resources/cp437_16x16.png");
 
 // Game Window dimensions
 const WINDOW_WIDTH: i32 = 80;
@@ -465,12 +462,14 @@ fn main() -> rltk::BError {
     use rltk::RltkBuilder;
 
     // Linking embedded font files use
-    rltk::link_resource!(GAME_FONT, "resources/cp437_16x16_mod.png");
-    rltk::link_resource!(GAME_FONT2, "resources/cp437_16x16.png");
+    rltk::link_resource!(GAME_FONT, "resources/cp437_8x8.png");
+    rltk::link_resource!(GAME_FONT2, "resources/cp437_16x16_mod.png");
+    rltk::link_resource!(GAME_FONT3, "resources/cp437_16x16.png");
     
     let mut context = RltkBuilder::simple(WINDOW_WIDTH, WINDOW_HEIGHT)
         .unwrap()
         .with_title("McGuffin Quest")
+        .with_font("cp437_8x8.png", 8, 8)
         .with_font("cp437_16x16_mod.png", FONT_TILE_SIZE, FONT_TILE_SIZE)
         .with_font("cp437_16x16.png", FONT_TILE_SIZE, FONT_TILE_SIZE)
         .with_tile_dimensions(FONT_TILE_SIZE, FONT_TILE_SIZE)
@@ -478,7 +477,7 @@ fn main() -> rltk::BError {
         .build()?;
 
     // Set Active font to cp437_16x16_mod.png
-    context.set_active_font(1, false);
+    context.set_active_font(2, true);
 
     // Screenburn color and scanlines
     //let screenburn: bool = true;

@@ -1,8 +1,10 @@
+#![allow(unused)]
 mod db16;
 use db16::*;
 mod db32;
 mod lcd;
 use rltk::RGB;
+
 
 pub fn return_u8_rgb(color_values: (f32,f32,f32)) -> RGB {
     let rgb: RGB = RGB::from_f32(color_values.0, color_values.1, color_values.2);
@@ -15,7 +17,7 @@ pub fn return_f32_rgb(color_values: (u8, u8, u8)) -> RGB {
 }
 
 // Defaults
-#[allow(unused)]
+
 pub const DEFAULT_FG: (f32, f32, f32) = DB16_LIGHT8_F32;
 pub const DEFAULT_BG: (f32, f32, f32) = DB16_DARK1_F32;
 

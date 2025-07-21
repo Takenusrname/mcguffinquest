@@ -1,3 +1,4 @@
+#![allow(unused)]
 // player glyph
 pub const PLAYER_GLYPH: char = '@';
 

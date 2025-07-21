@@ -55,6 +55,7 @@ impl MapBuilder for DLABuilder {
 }
 
 impl DLABuilder {
+    #[allow(dead_code)]
     pub fn new(new_depth: i32) -> DLABuilder{
         DLABuilder {
             map: Map::new(new_depth),
