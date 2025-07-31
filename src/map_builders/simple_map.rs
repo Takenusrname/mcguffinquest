@@ -7,7 +7,8 @@ pub struct SimpleMapBuilder {
     starting_positon: Position,
     depth: i32,
     rooms: Vec<Rect>,
-    history: Vec<Map>
+    history: Vec<Map>,
+    spawn_list: Vec<(usize, String)>
 }
 
 impl MapBuilder for SimpleMapBuilder {
@@ -23,10 +24,8 @@ impl MapBuilder for SimpleMapBuilder {
         SimpleMapBuilder::rooms_and_corridors(self);
     }
 
-    fn spawn_entities(&mut self, ecs: &mut World) {
-        for room in self.rooms.iter().skip(1) {
-            spawner::spawn_room(ecs, room, self.depth)
-        }
+    fn get_spawn_list(&self) -> &Vec<(usize, String)> {
+        &self.spawn_list
     }
 
     fn get_snapshot_history(&self) -> Vec<Map> {
@@ -52,7 +51,8 @@ impl SimpleMapBuilder {
             starting_positon: Position{ x: 0, y: 0 },
             depth: new_depth,
             rooms: Vec::new(),
-            history: Vec::new()
+            history: Vec::new(),
+            spawn_list: Vec::new()
         }
     }
     fn rooms_and_corridors(&mut self) {
@@ -105,6 +105,10 @@ impl SimpleMapBuilder {
         self.map.tiles[stairs_idx] = TileType::DownStairs;
 
         let start_pos = self.rooms[0].center();
-        self.starting_positon = Position{ x: start_pos.0, y: start_pos.1 }
+        self.starting_positon = Position{ x: start_pos.0, y: start_pos.1 };
+
+        for room in self.rooms.iter().skip(1) {
+            spawner::spawn_room(&self.map, &mut rng, room, self.depth, &mut self.spawn_list);
+        }
     }
 }

@@ -453,9 +453,11 @@ rltk::embedded_resource!(GAME_FONT3,"../resources/cp437_16x16.png");
 const WINDOW_WIDTH: i32 = 80;
 const WINDOW_HEIGHT: i32 = 50;
 // Font size
-const FONT_TILE_SIZE: i32 = 16;
+const FONT_SIZE_SMALL: i32 = 8;
+const FONT_SIZE_LARGE: i32 = 16;
 // FPS cap
 const FPS_CAP: f32 = 30.0;
+const VSYNC: bool = true;
 
 // MARK: MAIN LOOP
 fn main() -> rltk::BError {
@@ -469,10 +471,11 @@ fn main() -> rltk::BError {
     let mut context = RltkBuilder::simple(WINDOW_WIDTH, WINDOW_HEIGHT)
         .unwrap()
         .with_title("McGuffin Quest")
-        .with_font("cp437_8x8.png", 8, 8)
-        .with_font("cp437_16x16_mod.png", FONT_TILE_SIZE, FONT_TILE_SIZE)
-        .with_font("cp437_16x16.png", FONT_TILE_SIZE, FONT_TILE_SIZE)
-        .with_tile_dimensions(FONT_TILE_SIZE, FONT_TILE_SIZE)
+        .with_font("cp437_8x8.png", FONT_SIZE_SMALL, FONT_SIZE_SMALL)
+        .with_font("cp437_16x16_mod.png", FONT_SIZE_LARGE, FONT_SIZE_LARGE)
+        .with_font("cp437_16x16.png", FONT_SIZE_LARGE, FONT_SIZE_LARGE)
+        .with_tile_dimensions(FONT_SIZE_LARGE, FONT_SIZE_LARGE)
+        .with_vsync(VSYNC)
         .with_fps_cap(FPS_CAP)
         .build()?;
 
